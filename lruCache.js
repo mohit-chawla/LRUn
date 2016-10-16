@@ -1,3 +1,8 @@
+/*
+
+This script lets you make an easy cache for applications like 
+"Recent searches", "History based auto complete" etc.
+*/
 var LRUCache = function (maxsize) {
   this._keys = [];
   this._items = [];
