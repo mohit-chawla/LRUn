@@ -1,6 +1,6 @@
 /*
 
-Author: Mohit Chawla | www.mohitchawla.in |
+Author: Mohit Chawla | www.mohitchawla.in | mohitchawla@cse.ism.ac.in
 This script lets you make an easy cache for applications like 
 "Recent searches", "History based auto complete" etc.
 */
