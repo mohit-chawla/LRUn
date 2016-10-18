@@ -3,6 +3,15 @@
 This script lets you make an easy cache for applications like 
 "Recent searches", "History based auto complete" etc.
 */
+
+'use strict';
+
+/**
+ * Create a cache with maxsize
+ *
+ * @param {string} maxsize
+ * 
+ */
 var LRUCache = function (maxsize) {
   this._keys = [];
   this._items = [];
@@ -15,16 +24,24 @@ var LRUCache = function (maxsize) {
 };
 
 LRUCache.prototype = {
-  set: function (key, value, callback) {
+  /**
+   * Create a cache with maxsize
+   *
+   * @param {string} key
+   * @param {string} value
+   * @return {string} inputIndex
+   * 
+   */
+  set: function (key, value) {
     var keys = this._keys,
         items = this._items,
         expires = this._expires,
         size = this._size,
         maxsize = this._maxsize;
 
+    var inputIndex = size;
     if (size >= maxsize) { // size Limit reached, need tp delete
       //find the oldest entry for the "key" and delete
-      console.log("in if");
       var oldestKey = Date.now();
       var oldestIndex = -1;
       for(var i=0;i<expires[key].length;i++){
@@ -41,6 +58,7 @@ LRUCache.prototype = {
       keys[key][oldestIndex] = key;
       items[key][oldestIndex] = value;
       expires[key][oldestIndex] = Date.now();
+      inputIndex = oldestIndex;
     }
     else{
       console.log("in else//");
@@ -67,22 +85,37 @@ LRUCache.prototype = {
     this._expires = expires;
     this._size = size;
 
-    if (callback) return callback(size);
+    return inputIndex;
   },
-
+  /**
+   * get all items for a key 
+   *
+   * @param {string} key
+   * @param {functino} callback
+   * @return {array} inputIndex
+   * 
+   */
   get: function (key, callback) {
-    var item = this._items[key];
-    if (item) this._expires[key] = Date.now();
-    if (callback) return callback(item);
-    return item;
+    if(key){
+      //TODO: consider updating timestamp of this , to make it more recently accessed
+      var items = this._items[key];
+      return items; 
+    }
+    else{
+      return "Error: missing argument,key needed!"
+    }
   },
-  allkeys : function(){
+  /**
+   * get all keys 
+   *
+   * @return {array} allKeys
+   * 
+   */
+  keys : function(){
     var allKeys = [];
     for(key in this._keys){
       allKeys.push(key);
     }
     return allKeys;
   },
-
-
 };
