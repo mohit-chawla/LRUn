@@ -75,5 +75,14 @@ LRUCache.prototype = {
     if (item) this._expires[key] = Date.now();
     if (callback) return callback(item);
     return item;
-  }
+  },
+  allkeys : function(){
+    var allKeys = [];
+    for(key in this._keys){
+      allKeys.push(key);
+    }
+    return allKeys;
+  },
+
+
 };
